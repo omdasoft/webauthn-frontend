@@ -10,6 +10,8 @@
     <div class="dashboard-content">
       <h2>Welcome, {{ name }}</h2>
       <WebAuthnRegister />
+      
+      <DisablePasswordLogin/>
     </div>
   </div>
 </template>
@@ -18,6 +20,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import WebAuthnRegister from '../components/WebAuthnRegister.vue'
+import DisablePasswordLogin from '../components/DisablePasswordLogin.vue'
 
 const router = useRouter()
 const name = ref(null)

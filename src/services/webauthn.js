@@ -43,3 +43,27 @@ export async function loginWebAuthn() {
         throw error
     }
 }
+
+export async function initiatePasswordLoginDisable() {
+    try {
+        // Get login options from your Laravel backend
+        const {data: res } = await api.get('/operator/initiate-password-disable')
+
+        if (res.code === -1) {
+            throw res;
+        }
+      
+        // Start login process
+        const passkey = await startAuthentication(res.data.passkey)
+
+        // Send response to backend for verification
+        const { data: verificationResp } = await api.post(
+            '/operator/complete-password-disable',
+            {passkey: JSON.stringify(passkey), challenge_id: res.data.challenge_id}
+        )
+        return verificationResp
+    } catch (error) {
+        console.error('Authentication failed:', error)
+        throw error
+    }
+}
